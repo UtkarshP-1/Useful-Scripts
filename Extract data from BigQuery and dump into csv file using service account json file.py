@@ -1,3 +1,4 @@
+# Python Script to extract data from Google BigQuery and dump into csv file using service account json file
 import time
 import datetime
 from google.cloud import bigquery
