@@ -9,7 +9,7 @@ start_time = time.time()
 
 client = bigquery.Client.from_service_account_json("[SERVICE ACCOUNT JSON LOCATION]")
 
-def extract_dbu_file(field_name):
+def extract_file(field_name):
     extarction_started = time.time()  # to get elapsed time of single file/function call
 
     query = f"""
