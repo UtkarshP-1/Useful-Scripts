@@ -1,16 +1,15 @@
 import pandas as pd
-import zipfile
 import os
 
 # Define the path to the zip file and the output CSV file
-files_location = 'C:/Users/utkarsh.palwekar/Downloads/Contact_Center/'
-output_csv_path = 'C:/Users/utkarsh.palwekar/Downloads/combined_filtered_data.csv'
+files_location = '[FILES_LOCATION]'
+output_csv_path = '[OUTPUT_FILE_LOCATION]/combined_filtered_data.csv'
 
 dataframes = []
 
 # Loop through the extracted files
 for filename in os.listdir(files_location):
-    if filename.startswith("RingCentral"):
+    if filename.startswith("[CONDITION]"):
         file_path = os.path.join(files_location, filename)
         
         # Read the CSV file
@@ -25,23 +24,16 @@ for filename in os.listdir(files_location):
         
         # Print unique values in the Skill_Name column
         # if 'Skill_Name' in df.columns:
-        #     print(f"Unique values in 'Skill_Name' column: {df['Skill_Name'].unique()}")
+        #     print(f"Unique values in '[FIELD_NAME]' column: {df['[FIELD_NAME]'].unique()}")
         
-        df = df.rename(columns={'Contact_Id': 'Contact_ID',
-                                'Master_Contact_Id' : 'Master_Contact_ID',
-                                'Ani_Dialnum' : 'ANI_DIALNUM',
-                                'Start_Time' : 'start_time',
-                                'Prequeue' : 'PreQueue',
-                                'Inqueue' : 'InQueue',
-                                'Agent_Working_Time': 'Agent_Time',
-                                'Postqueue' : 'PostQueue',
-                                'Total_Time' : 'Total_Time_Plus_Disposition'})
+        df = df.rename(columns={'field1': 'Field1',
+                                'field2' : 'Field2'})
 
         # Rename columns to proper case
         # df.columns = [col.title() for col in df.columns]
 
         # Filter the DataFrame based on the Skill_Name field
-        filtered_df = df[df['Skill_Name'].str.contains('outbound|OB', case=False, na=False)]
+        filtered_df = df[df['[FIELD_NAME]'].str.contains('[CONDITION]', case=False, na=False)]
         
         # Append the filtered DataFrame to the list
         dataframes.append(filtered_df)
@@ -60,12 +52,13 @@ combined_df.to_csv(output_csv_path, index=False)
 
 print(f"Combined filtered data saved to {output_csv_path}")
 
+
 # To create separate csv for each year
 df_w_year = combined_df.copy()
 
 # Extract year
-df_w_year['year'] = combined_df['Start_Date'].str[-4:]
+df_w_year['Year'] = combined_df['Date'].str[-4:]
 
-for year in df_w_year['year'].unique():
-    df_export = df_w_year[df_w_year['year'] == year]
-    df_export.to_csv(f"C:/Users/utkarsh.palwekar/Downloads/Contact_Center_{year}.csv", index=False)
+for year in df_w_year['Year'].unique():
+    df_export = df_w_year[df_w_year['Year'] == year]
+    df_export.to_csv(f"[LOCATION]/combined_filtered_data_{year}.csv", index=False)
