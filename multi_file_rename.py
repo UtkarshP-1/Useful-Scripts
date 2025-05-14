@@ -1,3 +1,5 @@
+# Python program to rename multiple files with different name using dictionary for name mapping keeping extension intact 
+
 import os 
 
 filenames = {
@@ -7,17 +9,11 @@ filenames = {
 
 os.chdir("[FILE LOCATION]")
 
-# print(os.getcwd()) 
+# print(os.getcwd()) # to check current working directory has changed to file location provided in prev step
 
-# print(os.listdir())
 
-# print(filename)
-
-for file in os.listdir():
-    for key, value in filenames.items():
-        if file.startswith(key):
-            # ext = file.split('.') [1]
-            # print(ext)
-            # print(file, value)
-            os.rename(file, value + '.' + file.split('.') [1])
-            print(f"File {file} renamed to {value + '.' + file.split('.') [1]}")
+for file in os.listdir():                                                            # iterate through files in directory
+    for key, value in filenames.items():                                             # iterate through filenames dictionary
+        if file.startswith(key):                                                     # matches filename in filenames dictionary to rename 
+            os.rename(file, value + '.' + file.split('.') [1])                       # renames file keeping extension same as old file 
+            print(f"File {file} renamed to {value + '.' + file.split('.') [1]}")     # prints successfully renamed message
